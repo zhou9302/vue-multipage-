@@ -1,0 +1,77 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* 重置表单元素 */
+legend { color: #000; } /* for ie6 */
+fieldset, img { border: none; } /* img 搭车：让链接里的 img 无边框 */
+/* 注：optgroup 无法扶正 */
+button, input, select, textarea {
+    font-size: 100%; /* 使得表单元素在 ie 下能继承字体大小 */
+}
+abbr[title], acronym[title] { /* 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果 */
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul ,li{
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+a,a:link,a:visited,a:hover{
+	text-decoration: none;
+}
+
+*{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-webkit-overflow-scrolling: touch;
+	-webkit-tap-highlight-color: transparent;
+	font-family: PingFang-SC-Regular!important;
+}
+
+i,em{
+	font-style: normal;
+}
+
+html,body,#app{
+	position: relative;
+	width: 100%;
+  height: 100%;
+	min-height: 100%;
+}
