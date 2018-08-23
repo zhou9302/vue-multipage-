@@ -1,0 +1,124 @@
+@function rem($w) {
+  @return $w / 100+rem;
+}
+
+// 设置背景图片
+@mixin bg($bg) {
+  background: url($bg) no-repeat;
+  background-size: 100% 100%;
+}
+
+@mixin wh($w: 100%, $h: 100%) {
+  width: $w;
+  height: $h;
+}
+
+// 垂直居中
+@mixin vertical() {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+@mixin verticalA() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin formDisabled {
+  .el-input__inner {
+      background: #fff !important;
+      border: none;
+      padding: 0;
+      text-align: left;
+  }
+  .el-input__suffix,
+  .el-input__prefix {
+      display: none;
+  }
+}
+
+@mixin formLayout() {
+  margin-top: rem(15);
+  position: relative;
+  &>span {
+      @include blurCircle();
+  }
+}
+
+// form 中蓝色圆圈
+@mixin blurCircle() {
+  position: absolute;
+  width: rem(30);
+  height: rem(30);
+  background: #03b2eb;
+  text-align: center;
+  line-height: rem(30);
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  top: 3%;
+  left: -1%;
+}
+
+@mixin wh($w: 100%, $h: 100%) {
+  width: $w;
+  height: $h;
+}
+
+@mixin formP {
+  &>p {
+      font-size: rem(23);
+      padding-bottom: rem(17);
+  }
+}
+
+@mixin formScroll($h) {
+  &>div {
+      height: $h;
+      overflow-y: scroll;
+  }
+}
+
+// 设置背景图片
+@mixin bg($bg) {
+  background: url($bg) no-repeat;
+  background-size: 100% 100%;
+}
+
+@mixin clearfix {
+  &:after {
+      content: '';
+      display: table;
+      clear: both;
+  }
+}
+
+@mixin scrollBar {
+  &::-webkit-scrollbar-track-piece {
+      background: #d3dce6;
+  }
+  &::-webkit-scrollbar {
+      width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+      background: #99a9bf;
+      border-radius: 20px;
+  }
+}
+
+@mixin relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin el-btn {
+  height: rem(30);
+  line-height: 0;
+  text-align: center;
+}

@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import './mock/index'
-import '../../styles/reset.scss'
+import '../../styles/index.scss'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
