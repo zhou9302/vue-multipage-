@@ -9,10 +9,16 @@
 
 <script>
 import hello from '../../components/HelloWorld'
+import {getInfo} from './api/index.js'
 export default {
   name: 'App',
   components: {
     hello
+  },
+  created () {
+    getInfo().then((res) => {
+      console.log(res)
+    })
   }
 }
 </script>
