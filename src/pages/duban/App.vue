@@ -103,7 +103,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import titleBox from './components/title'
 import messageBox from './components/messageBox'
@@ -242,7 +241,7 @@ export default {
   .img{
     width:19%;;
     float: left;
-    margin:15px 0 40px 16px;
+    margin:15px 0 40px 0.8%;
     border-radius: 5px;
     background: #89afe4;
   }
