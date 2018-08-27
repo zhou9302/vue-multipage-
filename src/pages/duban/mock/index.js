@@ -47,3 +47,14 @@ Mock.mock('api/duban/getInfo', 'get', {
     'regexp': /[a-z][A-Z][0-9]/
   }]
 })
+Mock.mock('/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200', 'get', {
+  'code': '0',
+  'totalNum': 4,
+  'list|4': [{
+    'id': '@guid',
+    'formid': '@guid',
+    'application': '@guid',
+    'date': '@date("yyyy-MM-dd HH:mm:ss")',
+    'content': '@cparagraph()'
+  }]
+})
