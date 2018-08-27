@@ -5,8 +5,11 @@ import App from './App'
 import router from './router'
 import './mock/index'
 import '../../styles/index.scss'
+import { Pagination } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = false
 
+Vue.component(Pagination.name, Pagination)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
