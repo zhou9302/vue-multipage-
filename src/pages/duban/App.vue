@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <titleBox :title="'快速入口'" :titleEng="'BACKLOG STATISTICS'"></titleBox>
+    <div class="imgBox">
+      <img src="./assets/test.png" class="img">
+      <img src="./assets/test.png" class="img">
+      <img src="./assets/test.png" class="img">
+      <img src="./assets/test.png" class="img">
+      <img src="./assets/test.png" class="img">
+    </div>
     <titleBox :title="'待办已办'" :titleEng="'BACKLOG STATISTICS'"></titleBox>
     <div class="backlogContent">
       <messageBox class="messageBox"></messageBox>
@@ -227,6 +235,19 @@ export default {
     .block{
       margin-top:40px;
     }
+  }
+}
+.imgBox{
+  overflow: hidden;
+  .img{
+    width:19%;;
+    float: left;
+    margin:15px 0 40px 16px;
+    border-radius: 5px;
+    background: #89afe4;
+  }
+  .img:hover{
+    background: #6494d7;
   }
 }
 </style>
