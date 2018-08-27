@@ -14,6 +14,10 @@ module.exports = {
       "/api": {
         target: "http://172.17.0.179:8080",
         pathRewrite: {"^/api" : ""} //后面可以使重写的新路径，一般不做更改
+      },
+      "/jiamin": {
+        target: "http://172.23.1.179:8080",
+        pathRewrite: {"^/jiamin" : ""} //后面可以使重写的新路径，一般不做更改
       }
     },
 

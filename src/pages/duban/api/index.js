@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 let api = {
-  getPendingLists: '/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200'
+  getPendingLists: '/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200',
+  getProcessedLists: '/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=200',
+  inShowPermission: '/api/obpm/runtime/inShowPermission'
 }
 
 const getPendingLists = () => {
@@ -10,15 +12,20 @@ const getPendingLists = () => {
   )
 }
 
-export {
-  getPendingLists
+const inShowPermission = () => {
+  return axios.get(
+    api.inShowPermission
+  )
 }
 
-// axios.interceptors.response.use(function (response) {
-//   // Do something with response data
-//   console.log(response)
-//   return response.data
-// }, function (error) {
-//   // Do something with response error
-//   return Promise.reject(error)
-// })
+const getProcessedLists = () => {
+  return axios.get(
+    api.getProcessedLists
+  )
+}
+
+export {
+  getPendingLists,
+  getProcessedLists,
+  inShowPermission
+}

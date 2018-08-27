@@ -52,9 +52,78 @@ Mock.mock('/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200', 'get', {
   'totalNum': 4,
   'list|4': [{
     'id': '@guid',
-    'formid': '@guid',
+    'formid': function () {
+      let a = Math.random(10)
+      if (a > 0.5) {
+        return '11e8-6eac-3369ebe6-a58e-6933a8e5e211'
+      } else {
+        return '11e8-7912-7090cd00-89e4-1578c741478f'
+      }
+    },
     'application': '@guid',
     'date': '@date("yyyy-MM-dd HH:mm:ss")',
     'content': '@cparagraph()'
   }]
+})
+Mock.mock('/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=200', 'get', {
+  'code': '0',
+  'totalNum': 4,
+  'list|4': [{
+    'id': '@guid',
+    'formid': function () {
+      let a = Math.random(10)
+      if (a > 0.5) {
+        return '11e8-6eac-3369ebe6-a58e-6933a8e5e211'
+      } else {
+        return '11e8-7912-7090cd00-89e4-1578c741478f'
+      }
+    },
+    'application': '@guid',
+    'date': '@date("yyyy-MM-dd HH:mm:ss")',
+    'content': '@cparagraph()'
+  }]
+})
+Mock.mock('/api/obpm/runtime/inShowPermission', 'get', {
+  'status': 10000,
+  'message': '@cparagraph()',
+  'result|4': [{
+    'description': '@title()',
+    'ico': "@image('364x184', '#4A7BF7')",
+    'url': '@url'
+  }]
+})
+Mock.mock('/api/obpm/getOfficeAndLeaders', 'get', {
+  'status': 10000,
+  'message': '@cparagraph()',
+  'result': {
+    'offices|8': [{
+      'name': '@title()',
+      'id': '@guid'
+    }],
+    'leaders|8': [{
+      'item_cantonalleadername': '@title()',
+      'item_cantonalleaderuuid': '@guid'
+    }]
+  }
+})
+Mock.mock('/api/obpm/countPendingItems', 'get', {
+  'status': 10000,
+  'message': '@cparagraph()',
+  'result': {
+    normal: 0,
+    transferred: 1,
+    expiring: 0,
+    acount: 1,
+    noTransferred: 0,
+    overdue: 0,
+    work: 0,
+    feedbackList: [{
+      ITEM_CANTONALLEADERNAME: '领导2',
+      countNum: 1,
+      ITEM_PARTAPPROACH: '我委会办',
+      ID: '11e8-a4eb-12d8ae19-b611-755c7bcd6ae0',
+      ITEM_TASKSUMMARY: '2018年重大事项督办管理办法修改后的',
+      NAME: '综合调研处'
+    }]
+  }
 })

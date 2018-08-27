@@ -10,7 +10,7 @@
     </div>
     <titleBox :title="'待办已办'" :titleEng="'BACKLOG STATISTICS'"></titleBox>
     <div class="backlogContent">
-      <messageBox class="messageBox"></messageBox>
+      <messageBox class="messageBox" :messageList="messageList"></messageBox>
       <messageBox class="messageBox"></messageBox>
     </div>
     <titleBox :title="'任务信息'" :titleEng="'TASK INFORMATION'" class="infomation"></titleBox>
@@ -108,14 +108,30 @@ import titleBox from './components/title'
 import messageBox from './components/messageBox'
 import chartBox from './components/chart'
 import selBox from './components/typeSelBox'
-import {getPendingLists} from './api/index.js'
+import {getPendingLists, inShowPermission} from './api/index.js'
 export default {
   name: 'App',
   components: {
     titleBox, messageBox, chartBox, selBox
   },
+  data () {
+    return {
+      messageList: null
+    }
+  },
   created () {
     getPendingLists().then((res) => {
+      let data = res.data
+      console.log(res)
+      if (data.code === '0') {
+        this.messageList = data.list
+      } else {
+        alert('接口请求出错')
+      }
+    }).catch((err) => {
+      alert('执行出错', err)
+    })
+    inShowPermission().then((res) => {
       console.log(res)
     })
   }
