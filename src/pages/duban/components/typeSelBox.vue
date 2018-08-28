@@ -23,7 +23,7 @@ export default{
   },
   methods: {
     sel (parm) {
-      console.log(parm)
+      this.id = ''
       this.selType = parm
     },
     selItems (id) {

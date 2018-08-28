@@ -85,9 +85,9 @@ export default {
   },
   data () {
     return {
-      penddingMessageList: null,
-      peddingNum: 0,
-      processedMessageList: null,
+      penddingMessageList: null, // 待办列表
+      peddingNum: 0, // 待办条数
+      processedMessageList: null, // 已办列表
       // processedNum: 0,
       enterArr: null,
       overdue: 0, // 已逾期
@@ -104,61 +104,76 @@ export default {
     }
   },
   created () {
-    getPendingLists().then((res) => {
-      let data = res.data
-      console.log(res)
-      if (data.code === '0') {
-        this.penddingMessageList = data.list
-        this.peddingNum = data.totalNum
-      } else {
-        alert('接口请求出错')
-      }
-    }).catch((err) => {
-      alert('执行出错', err)
-    })
-    getProcessedLists().then((res) => {
-      let data = res.data
-      console.log(res)
-      if (data.code === '0') {
-        this.processedMessageList = data.list
-        // this.processedNum = data.totalNum
-      } else {
-        alert('接口请求出错')
-      }
-    }).catch((err) => {
-      alert('执行出错', err)
-    })
-    inShowPermission().then((res) => {
-      let data = res.data
-      console.log(data)
-      if (data.status === 10000) {
-        this.enterArr = data.result
-      }
-    })
-    getOfficeAndLeaders().then((res) => {
-      let data = res.data
-      console.log(data)
-      if (data.status === 10000) {
-        this.typeArr = data.result
-      }
-    })
-    countPendingItems().then((res) => {
-      let data = res.data
-      console.log('pendingItems', data)
-      if (data.status === 10000) {
-        this.overdue = data.result.overdue
-        this.normal = data.result.normal
-        this.expiring = data.result.expiring
-        this.transferred = data.result.transferred
-        this.noTransferred = data.result.noTransferred
-        this.taskList = data.result.taskList
-        this.taskListTotal = data.result.acount
-      }
-    })
+    this.getPendingLists() // 获取待办事件
+    this.getProcessedLists() // 获取已办事件
+    this.inShowPermission() // 获取快速入口模块
+    this.getOfficeAndLeaders() // 获取处室委领导
+    this.countPendingItems() // 获取任务信息
   },
   methods: {
     link (url) {
       window.location.href = url
+    },
+    getPendingLists () {
+      getPendingLists().then((res) => {
+        let data = res.data
+        console.log(res)
+        if (data.code === '0') {
+          this.penddingMessageList = data.list
+          this.peddingNum = data.totalNum
+        } else {
+          alert('接口请求出错')
+        }
+      }).catch((err) => {
+        alert('执行出错', err)
+      })
+    },
+    getProcessedLists () {
+      getProcessedLists().then((res) => {
+        let data = res.data
+        console.log(res)
+        if (data.code === '0') {
+          this.processedMessageList = data.list
+        // this.processedNum = data.totalNum
+        } else {
+          alert('接口请求出错')
+        }
+      }).catch((err) => {
+        alert('执行出错', err)
+      })
+    },
+    inShowPermission () {
+      inShowPermission().then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.status === 10000) {
+          this.enterArr = data.result
+        }
+      })
+    },
+    getOfficeAndLeaders () {
+      getOfficeAndLeaders().then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.status === 10000) {
+          this.typeArr = data.result
+        }
+      })
+    },
+    countPendingItems () {
+      countPendingItems().then((res) => {
+        let data = res.data
+        console.log('pendingItems', data)
+        if (data.status === 10000) {
+          this.overdue = data.result.overdue
+          this.normal = data.result.normal
+          this.expiring = data.result.expiring
+          this.transferred = data.result.transferred
+          this.noTransferred = data.result.noTransferred
+          this.taskList = data.result.taskList
+          this.taskListTotal = data.result.acount
+        }
+      })
     }
   }
 }

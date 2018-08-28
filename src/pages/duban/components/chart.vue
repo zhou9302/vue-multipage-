@@ -21,7 +21,7 @@ export default{
 </script>
 <style lang="scss" scoped>
   .pie{
-    width:200px;
-    height:200px;
+    width:300px;
+    height:230px;
   }
 </style>

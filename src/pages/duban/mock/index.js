@@ -122,7 +122,7 @@ Mock.mock('/api/obpm/countPendingItems', 'get', {
       ITEM_CANTONALLEADERNAME: '领导2',
       countNum: 1,
       ITEM_PARTAPPROACH: '我委会办',
-      ID: '11e8-a4eb-12d8ae19-b611-755c7bcd6ae0',
+      'ID': '@guid',
       ITEM_TASKSUMMARY: '2018年重大事项督办管理办法修改后的',
       NAME: '综合调研处',
       OPERATOR: '小周周'
