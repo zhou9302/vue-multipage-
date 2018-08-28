@@ -114,7 +114,7 @@ Mock.mock('/api/obpm/countPendingItems', 'get', {
     normal: 231,
     transferred: 1,
     expiring: 23,
-    acount: 300,
+    acount: 100,
     noTransferred: 0,
     overdue: 11,
     work: 0,

@@ -14,7 +14,7 @@
       <div class="informationHeader">
         <chartBox class="chart"></chartBox>
         <div class="typeBox">
-          <selBox :typeArr="typeArr"></selBox>
+          <selBox :typeArr="typeArr" @changeCondition="changeCondition"></selBox>
           <table>
             <thead>
               <th>类型</th>
@@ -65,7 +65,8 @@
         <div class="block">
           <el-pagination
             layout="prev, pager, next"
-            :total="taskListTotal">
+            :total="taskListTotal"
+            @current-change="changePage">
           </el-pagination>
         </div>
       </div>
@@ -100,7 +101,10 @@ export default {
       typeArr: {
         leaders: [],
         offices: []
-      }
+      },
+      leaderId: '',
+      officeId: '',
+      isOffice: ''
     }
   },
   created () {
@@ -174,6 +178,19 @@ export default {
           this.taskListTotal = data.result.acount
         }
       })
+    },
+    changeCondition (parm) {
+      let {leaderId, officeId, isOffice} = parm
+      if (leaderId || officeId) {
+        isOffice = ''
+      }
+      this.leaderId = leaderId
+      this.officeId = officeId
+      this.isOffice = isOffice
+      this.countPendingItems()
+    },
+    changePage (page) {
+      this.countPendingItems()
     }
   }
 }
