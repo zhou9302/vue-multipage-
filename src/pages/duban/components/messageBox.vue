@@ -1,43 +1,27 @@
 <template>
   <div>
     <div class="backlogTitle">
-      <div>已办任务<span class="counter">3</span></div>
+      <div>{{label}}<span class="counter" v-if="totalNum">{{totalNum}}</span></div>
       <div class="more">更多</div>
     </div>
     <div class="backlogContent">
-        <div class="item">
+        <div class="item" v-for="items in messageList" :key="items.id">
             <div class="icon">
-              <img src="../assets/email.png" alt="">
+              <img src="../assets/email.png" alt="" v-if="label=='已办任务'">
+              <div v-else>
+                <div v-if="items.formid==='11e8-6eac-3369ebe6-a58e-6933a8e5e211'" class="distribute">待派发</div>
+                <div v-else class="audit">待审核</div>
+              </div>
             </div>
-            <div class="itemContent">优化项目资金保障。由市财政局，国资委分工负责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为1231312313123123123</div>
-            <div class="date">2018.05.17</div>
-        </div>
-        <div class="item">
-            <div class="icon">
-              <img src="../assets/email.png" alt="">
-            </div>
-            <div class="itemContent">优化项目资金保障。由市财政局，国资委分工负责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为1231312313123123123</div>
-            <div class="date">2018.05.17</div>
-        </div>
-        <div class="item">
-            <div class="icon">
-              <img src="../assets/email.png" alt="">
-            </div>
-            <div class="itemContent">优化项目资金保障。由市财政局，国资委分工负责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为1231312313123123123</div>
-            <div class="date">2018.05.17</div>
-        </div>
-        <div class="item">
-            <div class="icon">
-              <img src="../assets/email.png" alt="">
-            </div>
-            <div class="itemContent">优化项目资金保障。由市财政局，国资委分工负责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为责，积极盘活我市存量国有资产和资源，，通过合理合规途径，注入市属国有企业，提高企业融资能力，为1231312313123123123</div>
-            <div class="date">2018.05.17</div>
+            <div class="itemContent">{{items.content}}</div>
+            <div class="date">{{items.date}}</div>
         </div>
     </div>
   </div>
 </template>
 <script>
 export default{
+  props: ['messageList', 'label', 'totalNum'],
   data () {
     return {
 
@@ -92,21 +76,37 @@ export default{
       cursor: pointer;
     }
     .icon{
-      @include wh(15%,30px);
+      @include wh(48px,48px);
       margin-left:13px;
+      div{
+         font-size:12px;
+         height:24px;
+         line-height: 24px;
+         margin-top:12px;
+      }
+      .audit{
+        background: #e6effc;
+        color:#5592ee;
+      }
+      .distribute{
+        background: #fdeded;
+        color:#ee4d4d;
+      }
     }
     .itemContent{
-      padding:0 10px;
+      @include wh(80%,48px);
+      text-align: left;
       font-size:14px;
       color:#414c65;
       overflow:hidden;
       text-overflow:ellipsis;
-      white-space:nowrap
+      white-space:nowrap;
+      padding-left:2%;
     }
     .date{
+      @include wh(150px,48px);
       color:#8994af;
       font-size:14px;
-      margin:0 10px 0 12px;
     }
   }
 }

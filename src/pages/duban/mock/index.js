@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+const Random = Mock.Random
 Mock.mock('api/duban/getInfo', 'get', {
   // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
   'list|1-3': [{
@@ -61,7 +62,7 @@ Mock.mock('/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200', 'get', {
       }
     },
     'application': '@guid',
-    'date': '@date("yyyy-MM-dd HH:mm:ss")',
+    'date': '@date("yyyy-MM-dd")',
     'content': '@cparagraph()'
   }]
 })
@@ -79,14 +80,14 @@ Mock.mock('/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=200', 'get',
       }
     },
     'application': '@guid',
-    'date': '@date("yyyy-MM-dd HH:mm:ss")',
+    'date': '@date("yyyy-MM-dd")',
     'content': '@cparagraph()'
   }]
 })
 Mock.mock('/api/obpm/runtime/inShowPermission', 'get', {
   'status': 10000,
   'message': '@cparagraph()',
-  'result|4': [{
+  'result|1-5': [{
     'description': '@title()',
     'ico': "@image('364x184', '#4A7BF7')",
     'url': '@url'
@@ -96,12 +97,12 @@ Mock.mock('/api/obpm/getOfficeAndLeaders', 'get', {
   'status': 10000,
   'message': '@cparagraph()',
   'result': {
-    'offices|8': [{
-      'name': '@title()',
+    'offices|16': [{
+      'name|5': Random.string('lower'),
       'id': '@guid'
     }],
-    'leaders|8': [{
-      'item_cantonalleadername': '@title()',
+    'leaders|16': [{
+      'item_cantonalleadername|3': Random.string('lower'),
       'item_cantonalleaderuuid': '@guid'
     }]
   }
@@ -110,20 +111,21 @@ Mock.mock('/api/obpm/countPendingItems', 'get', {
   'status': 10000,
   'message': '@cparagraph()',
   'result': {
-    normal: 0,
+    normal: 231,
     transferred: 1,
-    expiring: 0,
-    acount: 1,
+    expiring: 23,
+    acount: 300,
     noTransferred: 0,
-    overdue: 0,
+    overdue: 11,
     work: 0,
-    feedbackList: [{
+    'taskList|4': [{
       ITEM_CANTONALLEADERNAME: '领导2',
       countNum: 1,
       ITEM_PARTAPPROACH: '我委会办',
       ID: '11e8-a4eb-12d8ae19-b611-755c7bcd6ae0',
       ITEM_TASKSUMMARY: '2018年重大事项督办管理办法修改后的',
-      NAME: '综合调研处'
+      NAME: '综合调研处',
+      OPERATOR: '小周周'
     }]
   }
 })

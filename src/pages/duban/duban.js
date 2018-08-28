@@ -7,6 +7,7 @@ import './mock/index'
 import '../../styles/index.scss'
 import { Pagination } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// import '../../styles/iconfont/iconfont.css'
 Vue.config.productionTip = false
 
 Vue.component(Pagination.name, Pagination)

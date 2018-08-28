@@ -1,24 +1,20 @@
 <template>
   <div id="app">
-    <titleBox :title="'快速入口'" :titleEng="'BACKLOG STATISTICS'"></titleBox>
+    <titleBox :title="'快速入口'" :titleEng="'SHORTCUT ENTRANCE'"></titleBox>
     <div class="imgBox">
-      <img src="./assets/test.png" class="img">
-      <img src="./assets/test.png" class="img">
-      <img src="./assets/test.png" class="img">
-      <img src="./assets/test.png" class="img">
-      <img src="./assets/test.png" class="img">
+      <img v-for="items in enterArr" :key="items.url" :src="items.ico" alt="" class="img" @click="link(items.url)">
     </div>
     <titleBox :title="'待办已办'" :titleEng="'BACKLOG STATISTICS'"></titleBox>
     <div class="backlogContent">
-      <messageBox class="messageBox" :messageList="messageList"></messageBox>
-      <messageBox class="messageBox"></messageBox>
+      <messageBox class="messageBox" :messageList="penddingMessageList" :label="'待办任务'" :totalNum="peddingNum"></messageBox>
+      <messageBox class       ="messageBox" :messageList="processedMessageList" :label="'已办任务'"></messageBox>
     </div>
     <titleBox :title="'任务信息'" :titleEng="'TASK INFORMATION'" class="infomation"></titleBox>
     <div class="informationBox">
       <div class="informationHeader">
         <chartBox class="chart"></chartBox>
         <div class="typeBox">
-          <selBox></selBox>
+          <selBox :typeArr="typeArr"></selBox>
           <table>
             <thead>
               <th>类型</th>
@@ -28,9 +24,9 @@
             </thead>
             <tbody>
               <td>数量</td>
-              <td>3</td>
-              <td>3</td>
-              <td>3</td>
+              <td>{{overdue}}</td>
+              <td>{{expiring}}</td>
+              <td>{{normal}}</td>
             </tbody>
           </table>
         </div>
@@ -55,48 +51,21 @@
             <th>经办人</th>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>市政府</td>
-              <td>31231231231</td>
-              <td>任务内容任务内容任务内容任务内容任务内容任务内容任务内容任务内容任务内容</td>
-              <td>周颖</td>
-              <td>财经处</td>
-              <td>崔永元</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>市政府</td>
-              <td>31231231231</td>
-              <td>任务内容任务内容任务内容任务内容任务内容任务内容任务内容任务内容任务内容</td>
-              <td>周颖</td>
-              <td>财经处</td>
-              <td>崔永元</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>市政府</td>
-              <td>31231231231</td>
-              <td>任务内容任务内容任务内容任务内容任务内容任务内容任务内容任务内容任务内容</td>
-              <td>周颖</td>
-              <td>财经处</td>
-              <td>崔永元</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>市政府</td>
-              <td>31231231231</td>
-              <td>任务内容任务内容任务内容任务内容任务内容任务内容任务内容任务内容任务内容</td>
-              <td>周颖</td>
-              <td>财经处</td>
-              <td>崔永元</td>
+            <tr v-for="(items,index) in taskList" :key="index">
+              <td>{{index+1}}</td>
+              <td>{{items.ITEM_PARTAPPROACH}}</td>
+              <td>{{items.ID}}</td>
+              <td>{{items.ITEM_TASKSUMMARY}}</td>
+              <td>{{items.ITEM_CANTONALLEADERNAME}}</td>
+              <td>{{items.NAME}}</td>
+              <td>{{items.OPERATOR}}</td>
             </tr>
           </tbody>
         </table>
         <div class="block">
           <el-pagination
             layout="prev, pager, next"
-            :total="50">
+            :total="taskListTotal">
           </el-pagination>
         </div>
       </div>
@@ -108,7 +77,7 @@ import titleBox from './components/title'
 import messageBox from './components/messageBox'
 import chartBox from './components/chart'
 import selBox from './components/typeSelBox'
-import {getPendingLists, inShowPermission} from './api/index.js'
+import {getPendingLists, inShowPermission, getProcessedLists, getOfficeAndLeaders, countPendingItems} from './api/index.js'
 export default {
   name: 'App',
   components: {
@@ -116,7 +85,22 @@ export default {
   },
   data () {
     return {
-      messageList: null
+      penddingMessageList: null,
+      peddingNum: 0,
+      processedMessageList: null,
+      // processedNum: 0,
+      enterArr: null,
+      overdue: 0, // 已逾期
+      normal: 0, // 正常推进
+      expiring: 0, // 即将到期
+      transferred: 0, // 已办结
+      noTransferred: 0, // 未办结
+      taskList: [],
+      taskListTotal: 0,
+      typeArr: {
+        leaders: [],
+        offices: []
+      }
     }
   },
   created () {
@@ -124,7 +108,20 @@ export default {
       let data = res.data
       console.log(res)
       if (data.code === '0') {
-        this.messageList = data.list
+        this.penddingMessageList = data.list
+        this.peddingNum = data.totalNum
+      } else {
+        alert('接口请求出错')
+      }
+    }).catch((err) => {
+      alert('执行出错', err)
+    })
+    getProcessedLists().then((res) => {
+      let data = res.data
+      console.log(res)
+      if (data.code === '0') {
+        this.processedMessageList = data.list
+        // this.processedNum = data.totalNum
       } else {
         alert('接口请求出错')
       }
@@ -132,8 +129,37 @@ export default {
       alert('执行出错', err)
     })
     inShowPermission().then((res) => {
-      console.log(res)
+      let data = res.data
+      console.log(data)
+      if (data.status === 10000) {
+        this.enterArr = data.result
+      }
     })
+    getOfficeAndLeaders().then((res) => {
+      let data = res.data
+      console.log(data)
+      if (data.status === 10000) {
+        this.typeArr = data.result
+      }
+    })
+    countPendingItems().then((res) => {
+      let data = res.data
+      console.log('pendingItems', data)
+      if (data.status === 10000) {
+        this.overdue = data.result.overdue
+        this.normal = data.result.normal
+        this.expiring = data.result.expiring
+        this.transferred = data.result.transferred
+        this.noTransferred = data.result.noTransferred
+        this.taskList = data.result.taskList
+        this.taskListTotal = data.result.acount
+      }
+    })
+  },
+  methods: {
+    link (url) {
+      window.location.href = url
+    }
   }
 }
 </script>

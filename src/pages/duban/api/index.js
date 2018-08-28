@@ -3,7 +3,9 @@ import axios from 'axios'
 let api = {
   getPendingLists: '/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200',
   getProcessedLists: '/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=200',
-  inShowPermission: '/api/obpm/runtime/inShowPermission'
+  inShowPermission: '/api/obpm/runtime/inShowPermission',
+  getOfficeAndLeaders: '/api/obpm/getOfficeAndLeaders',
+  countPendingItems: '/api/obpm/countPendingItems'
 }
 
 const getPendingLists = () => {
@@ -24,8 +26,22 @@ const getProcessedLists = () => {
   )
 }
 
+const getOfficeAndLeaders = () => {
+  return axios.get(
+    api.getOfficeAndLeaders
+  )
+}
+
+const countPendingItems = () => {
+  return axios.get(
+    api.countPendingItems
+  )
+}
+
 export {
   getPendingLists,
   getProcessedLists,
-  inShowPermission
+  inShowPermission,
+  getOfficeAndLeaders,
+  countPendingItems
 }
