@@ -5,7 +5,8 @@ let api = {
   getProcessedLists: '/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=4',
   inShowPermission: '/api/obpm/runtime/inShowPermission',
   getOfficeAndLeaders: '/api/obpm/getOfficeAndLeaders',
-  countPendingItems: '/api/obpm/countPendingItems'
+  countPendingItems: '/api/obpm/countPendingItems',
+  getAllTasks: '/api/obpm/getAllTasks'
 }
 
 const getPendingLists = () => {
@@ -38,10 +39,17 @@ const countPendingItems = (parm) => {
   )
 }
 
+const getAllTasks = () => {
+  return axios.get(
+    api.getAllTasks
+  )
+}
+
 export {
   getPendingLists,
   getProcessedLists,
   inShowPermission,
   getOfficeAndLeaders,
-  countPendingItems
+  countPendingItems,
+  getAllTasks
 }

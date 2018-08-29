@@ -79,7 +79,7 @@ import titleBox from './components/title'
 import messageBox from './components/messageBox'
 import chartBox from './components/chart'
 import selBox from './components/typeSelBox'
-import {getPendingLists, inShowPermission, getProcessedLists, getOfficeAndLeaders, countPendingItems} from './api/index.js'
+import {getPendingLists, inShowPermission, getProcessedLists, getOfficeAndLeaders, countPendingItems, getAllTasks} from './api/index.js'
 export default {
   name: 'App',
   components: {
@@ -118,6 +118,7 @@ export default {
     this.inShowPermission() // 获取快速入口模块
     this.getOfficeAndLeaders() // 获取处室委领导
     this.countPendingItems() // 获取任务信息
+    this.getAllTasks()
   },
   methods: {
     link (url) {
@@ -185,7 +186,7 @@ export default {
       }
       countPendingItems(parm).then((res) => {
         let data = res.data
-        // console.log('pendingItems', data)
+        console.log('pendingItems', data)
         if (data.status === 10000) {
           let {overdue, normal, expiring, transferred, noTransferred} = data.result
           this.taskInfo = {overdue, normal, expiring, transferred, noTransferred}
@@ -194,6 +195,14 @@ export default {
         } else {
           alert(data.message)
         }
+      }).catch((err) => {
+        alert('执行出错', err)
+      })
+    },
+    getAllTasks () {
+      getAllTasks().then((res) => {
+        let data = res.data
+        console.log('getAllTasks', data)
       }).catch((err) => {
         alert('执行出错', err)
       })
