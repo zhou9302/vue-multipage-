@@ -52,12 +52,12 @@
           </thead>
           <tbody>
             <tr v-for="(items,index) in taskList" :key="index">
-              <td><i :class="taskStateColor(items.task_state)"></i>{{index+1}}</td>
+              <td><i :class="taskStateColor(items.TASK_STATE)"></i>{{index+1}}</td>
               <td>{{items.ITEM_PARTAPPROACH}}</td>
               <td>{{items.ID}}</td>
               <td>{{items.ITEM_TASKSUMMARY}}</td>
               <td>{{items.ITEM_CANTONALLEADERNAME}}</td>
-              <td>{{items.NAME}}</td>
+              <td>{{items.officeName}}</td>
               <td>{{items.OPERATOR}}</td>
             </tr>
           </tbody>
@@ -66,6 +66,7 @@
           <el-pagination
             layout="prev, pager, next"
             :total="taskListTotal"
+            :page-size="pageSize"
             @current-change="changePage">
           </el-pagination>
         </div>
@@ -107,7 +108,8 @@ export default {
       leaderId: '',
       officeId: '',
       isOffice: '',
-      currentPage: 1
+      currentPage: 1,
+      pageSize: 4
     }
   },
   created () {
@@ -176,7 +178,12 @@ export default {
       })
     },
     countPendingItems () {
-      countPendingItems().then((res) => {
+      let parm = {
+        leaderId: this.leaderId || '',
+        officeId: this.officeId || '',
+        pageStart: this.currentPage
+      }
+      countPendingItems(parm).then((res) => {
         let data = res.data
         // console.log('pendingItems', data)
         if (data.status === 10000) {
@@ -224,7 +231,6 @@ export default {
           arr = ['circle', 'orange']
           break
       }
-      console.log(arr)
       return arr
     }
   }

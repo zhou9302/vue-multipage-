@@ -32,9 +32,9 @@ const getOfficeAndLeaders = () => {
   )
 }
 
-const countPendingItems = () => {
+const countPendingItems = (parm) => {
   return axios.get(
-    api.countPendingItems
+    api.countPendingItems + `?leaderId=${parm.leaderId}&officeId=${parm.officeId}&pageStart=${parm.pageStart}&num=4`
   )
 }
 

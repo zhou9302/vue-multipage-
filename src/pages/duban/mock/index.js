@@ -107,7 +107,7 @@ Mock.mock('/api/obpm/getOfficeAndLeaders', 'get', {
     }]
   }
 })
-Mock.mock('/api/obpm/countPendingItems', 'get', {
+Mock.mock('/api/obpm/countPendingItems?leaderId=&officeId=&pageStart=1&num=4', 'get', {
   'status': 10000,
   'message': '@cparagraph()',
   'result': {
@@ -124,7 +124,7 @@ Mock.mock('/api/obpm/countPendingItems', 'get', {
       ITEM_PARTAPPROACH: '我委会办',
       'ID': '@guid',
       ITEM_TASKSUMMARY: '2018年重大事项督办管理办法修改后的',
-      NAME: '综合调研处',
+      offifcename: '综合调研处',
       OPERATOR: '小周周'
     }]
   }
