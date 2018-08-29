@@ -6,9 +6,9 @@
       <div @click="sel('委领导')" :class="{sel:isOffice==false}">委领导</div>
     </div>
     <div class="itemsBox">
-      <div v-if="isOffice==true" v-for="items in typeArr.offices" :key="items.name" @click="selItems(items.id)"><span :class="{line:items.id==officeId}">{{items.name}}</span></div>
+      <div v-if="isOffice==true" v-for="items in typeArr.offices" :key="items.name" @click="selItems(items.id)" :title="items.name"><span :class="{line:items.id==officeId}">{{items.name}}</span></div>
       <div v-if="isOffice==false" v-for="items in typeArr.leaders" :key="items.item_cantonalleadername" @click="selItems(items.item_cantonalleaderuuid
-)"><span :class="{line:items.item_cantonalleaderuuid==leaderId}">{{items.item_cantonalleadername}}</span></div>
+)" :title="items.item_cantonalleadername"><span :class="{line:items.item_cantonalleaderuuid==leaderId}">{{items.item_cantonalleadername}}</span></div>
     </div>
   </div>
 </template>
@@ -65,11 +65,15 @@ export default{
     }
     .itemsBox{
       @include wh(100%,75px);
+      overflow: scroll;
       background: #f9fafd;
       margin-top:22px;
       div{
         float: left;
         @include wh(12.5%,37px);
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
         line-height: 37px;
         font-size:14px;
       }

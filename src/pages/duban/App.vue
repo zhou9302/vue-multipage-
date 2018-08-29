@@ -12,7 +12,7 @@
     <titleBox :title="'任务信息'" :titleEng="'TASK INFORMATION'" class="infomation"></titleBox>
     <div class="informationBox">
       <div class="informationHeader">
-        <chartBox class="chart"></chartBox>
+        <chartBox class="chart" :taskInfo="taskInfo"></chartBox>
         <div class="typeBox">
           <selBox :typeArr="typeArr" @changeCondition="changeCondition"></selBox>
           <table>
@@ -24,9 +24,9 @@
             </thead>
             <tbody>
               <td>数量</td>
-              <td>{{overdue}}</td>
-              <td>{{expiring}}</td>
-              <td>{{normal}}</td>
+              <td>{{taskInfo.overdue}}</td>
+              <td>{{taskInfo.expiring}}</td>
+              <td>{{taskInfo.normal}}</td>
             </tbody>
           </table>
         </div>
@@ -52,7 +52,7 @@
           </thead>
           <tbody>
             <tr v-for="(items,index) in taskList" :key="index">
-              <td>{{index+1}}</td>
+              <td><i :class="taskStateColor(items.task_state)"></i>{{index+1}}</td>
               <td>{{items.ITEM_PARTAPPROACH}}</td>
               <td>{{items.ID}}</td>
               <td>{{items.ITEM_TASKSUMMARY}}</td>
@@ -90,21 +90,24 @@ export default {
       peddingNum: 0, // 待办条数
       processedMessageList: null, // 已办列表
       // processedNum: 0,
-      enterArr: null,
-      overdue: 0, // 已逾期
-      normal: 0, // 正常推进
-      expiring: 0, // 即将到期
-      transferred: 0, // 已办结
-      noTransferred: 0, // 未办结
-      taskList: [],
-      taskListTotal: 0,
+      enterArr: null, // 快速入口接口返回数据
+      taskInfo: {
+        overdue: 0, // 已逾期
+        normal: 0, // 正常推进
+        expiring: 0, // 即将到期
+        transferred: 0, // 已办结
+        noTransferred: 0 // 未办结
+      },
+      taskList: [], // 任务信息列表
+      taskListTotal: 0, // 任务信息总条数
       typeArr: {
         leaders: [],
         offices: []
       },
       leaderId: '',
       officeId: '',
-      isOffice: ''
+      isOffice: '',
+      currentPage: 1
     }
   },
   created () {
@@ -123,10 +126,10 @@ export default {
         let data = res.data
         console.log(res)
         if (data.code === '0') {
-          this.penddingMessageList = data.list
+          this.penddingMessageList = data.pendingLists
           this.peddingNum = data.totalNum
         } else {
-          alert('接口请求出错')
+          alert(data.code)
         }
       }).catch((err) => {
         alert('执行出错', err)
@@ -137,10 +140,10 @@ export default {
         let data = res.data
         console.log(res)
         if (data.code === '0') {
-          this.processedMessageList = data.list
+          this.processedMessageList = data.pendingLists
         // this.processedNum = data.totalNum
         } else {
-          alert('接口请求出错')
+          alert(data.code)
         }
       }).catch((err) => {
         alert('执行出错', err)
@@ -152,7 +155,11 @@ export default {
         console.log(data)
         if (data.status === 10000) {
           this.enterArr = data.result
+        } else {
+          alert(data.message)
         }
+      }).catch((err) => {
+        alert('执行出错', err)
       })
     },
     getOfficeAndLeaders () {
@@ -161,22 +168,27 @@ export default {
         console.log(data)
         if (data.status === 10000) {
           this.typeArr = data.result
+        } else {
+          alert(data.message)
         }
+      }).catch((err) => {
+        alert('执行出错', err)
       })
     },
     countPendingItems () {
       countPendingItems().then((res) => {
         let data = res.data
-        console.log('pendingItems', data)
+        // console.log('pendingItems', data)
         if (data.status === 10000) {
-          this.overdue = data.result.overdue
-          this.normal = data.result.normal
-          this.expiring = data.result.expiring
-          this.transferred = data.result.transferred
-          this.noTransferred = data.result.noTransferred
+          let {overdue, normal, expiring, transferred, noTransferred} = data.result
+          this.taskInfo = {overdue, normal, expiring, transferred, noTransferred}
           this.taskList = data.result.taskList
           this.taskListTotal = data.result.acount
+        } else {
+          alert(data.message)
         }
+      }).catch((err) => {
+        alert('执行出错', err)
       })
     },
     changeCondition (parm) {
@@ -190,7 +202,30 @@ export default {
       this.countPendingItems()
     },
     changePage (page) {
+      this.currentPage = page
       this.countPendingItems()
+    },
+    taskStateColor (taskState) {
+      let arr = []
+      switch (taskState) {
+        case 'overdue':
+          arr = ['circle', 'green']
+          break
+        case 'normal':
+          arr = ['circle', 'red']
+          break
+        case 'expiring':
+          arr = ['circle', 'blue']
+          break
+        case 'transferred':
+          arr = ['circle', 'purple']
+          break
+        case 'work':
+          arr = ['circle', 'orange']
+          break
+      }
+      console.log(arr)
+      return arr
     }
   }
 }
@@ -264,30 +299,6 @@ export default {
       span:nth-child(1){
         margin-right:40px;
       }
-      span{
-        .circle{
-          @include wh(10px,10px);
-          margin-right:10px;
-          margin-left:15px;
-          border-radius: 5px;
-          display: inline-block;
-        }
-        .green{
-          background: #44efc1;
-        }
-        .blue{
-          background: #2de0ff;
-        }
-        .orange{
-          background: #f8a04a;
-        }
-        .red{
-          background: #ff4c79;
-        }
-        .purple{
-          background: #d172d8;
-        }
-      }
     }
     table{
         @include wh(100%,250px);
@@ -304,11 +315,36 @@ export default {
           line-height: 50px;
           border:1px solid #c0c8db;
         }
+        tr:hover{
+          background: #dae5fb;
+        }
     }
     .block{
       margin-top:40px;
     }
   }
+}
+.circle{
+  @include wh(10px,10px);
+  margin-right:10px;
+  margin-left:15px;
+  border-radius: 5px;
+  display: inline-block;
+}
+.green{
+  background: #44efc1;
+}
+.blue{
+  background: #2de0ff;
+}
+.orange{
+  background: #f8a04a;
+}
+.red{
+  background: #ff4c79;
+}
+.purple{
+  background: #d172d8;
 }
 .imgBox{
   overflow: hidden;

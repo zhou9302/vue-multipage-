@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 let api = {
-  getPendingLists: '/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200',
-  getProcessedLists: '/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=200',
+  getPendingLists: '/api/obpm/runtime/getPendingLists?currpage=1&pagelines=4',
+  getProcessedLists: '/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=4',
   inShowPermission: '/api/obpm/runtime/inShowPermission',
   getOfficeAndLeaders: '/api/obpm/getOfficeAndLeaders',
   countPendingItems: '/api/obpm/countPendingItems'

@@ -7,9 +7,10 @@ import './mock/index'
 import '../../styles/index.scss'
 import { Pagination } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import dayjs from 'dayjs'
 // import '../../styles/iconfont/iconfont.css'
 Vue.config.productionTip = false
-
+window.dayjs = dayjs
 Vue.component(Pagination.name, Pagination)
 /* eslint-disable no-new */
 new Vue({

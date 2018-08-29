@@ -48,10 +48,10 @@ Mock.mock('api/duban/getInfo', 'get', {
     'regexp': /[a-z][A-Z][0-9]/
   }]
 })
-Mock.mock('/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200', 'get', {
+Mock.mock('/api/obpm/runtime/getPendingLists?currpage=1&pagelines=4', 'get', {
   'code': '0',
   'totalNum': 4,
-  'list|4': [{
+  'pendingLists|4': [{
     'id': '@guid',
     'formid': function () {
       let a = Math.random(10)
@@ -66,10 +66,10 @@ Mock.mock('/api/obpm/runtime/getPendingLists?currpage=1&pagelines=200', 'get', {
     'content': '@cparagraph()'
   }]
 })
-Mock.mock('/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=200', 'get', {
+Mock.mock('/api/obpm/runtime/getProcessedLists?currpage=1&pagelines=4', 'get', {
   'code': '0',
   'totalNum': 4,
-  'list|4': [{
+  'pendingLists|4': [{
     'id': '@guid',
     'formid': function () {
       let a = Math.random(10)

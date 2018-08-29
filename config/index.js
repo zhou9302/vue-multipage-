@@ -18,6 +18,10 @@ module.exports = {
       "/jiamin": {
         target: "http://172.23.1.179:8080",
         pathRewrite: {"^/jiamin" : ""} //后面可以使重写的新路径，一般不做更改
+      },
+      '/zujia':{
+        target: "http://172.23.1.105:8081",
+        pathRewrite: {"^/zujia" : ""} //后面可以使重写的新路径，一般不做更改
       }
     },
 
