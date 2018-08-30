@@ -109,7 +109,7 @@ export default {
       officeId: '',
       isOffice: '',
       currentPage: 1,
-      pageSize: 4
+      pageSize: 5
     }
   },
   created () {
@@ -117,8 +117,8 @@ export default {
     this.getProcessedLists() // 获取已办事件
     this.inShowPermission() // 获取快速入口模块
     this.getOfficeAndLeaders() // 获取处室委领导
-    this.countPendingItems() // 获取任务信息
-    this.getAllTasks()
+    this.countPendingItems() // 获取任务信息列表
+    this.getAllTasks() // 获取任务信息
   },
   methods: {
     link (url) {
@@ -188,8 +188,6 @@ export default {
         let data = res.data
         console.log('pendingItems', data)
         if (data.status === 10000) {
-          let {overdue, normal, expiring, transferred, noTransferred} = data.result
-          this.taskInfo = {overdue, normal, expiring, transferred, noTransferred}
           this.taskList = data.result.taskList
           this.taskListTotal = data.result.acount
         } else {
@@ -200,9 +198,20 @@ export default {
       })
     },
     getAllTasks () {
-      getAllTasks().then((res) => {
+      let parm = {
+        leaderId: this.leaderId || '',
+        officeId: this.officeId || '',
+        pageStart: this.currentPage
+      }
+      getAllTasks(parm).then((res) => {
         let data = res.data
         console.log('getAllTasks', data)
+        if (data.status === 10000) {
+          let {overdue, normal, expiring, transferred, noTransferred} = data.result
+          this.taskInfo = {overdue, normal, expiring, transferred, noTransferred}
+        } else {
+          alert(data.message)
+        }
       }).catch((err) => {
         alert('执行出错', err)
       })
@@ -316,7 +325,7 @@ export default {
       }
     }
     table{
-        @include wh(100%,250px);
+        width:100%;
         text-align: center;
         th{
           height:50px;

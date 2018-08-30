@@ -5,7 +5,7 @@
       <div class="more">更多</div>
     </div>
     <div class="backlogContent">
-        <div class="item" v-for="items in messageList" :key="items.id" @click="link(items)">
+        <div class="item" v-for="items in messageList" :key="items.id" @click="link(items)" v-if="items.formid==='11e8-6eac-3369ebe6-a58e-6933a8e5e211'">
             <div class="icon">
               <img src="../assets/email.png" alt="" v-if="label=='已办任务'">
               <div v-else>

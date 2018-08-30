@@ -6,7 +6,7 @@ let api = {
   inShowPermission: '/api/obpm/runtime/inShowPermission',
   getOfficeAndLeaders: '/api/obpm/getOfficeAndLeaders',
   countPendingItems: '/api/obpm/countPendingItems',
-  getAllTasks: '/api/obpm/getAllTasks'
+  getAllTasks: '/zujia/obpm/getAllTasks'
 }
 
 const getPendingLists = () => {
@@ -35,13 +35,13 @@ const getOfficeAndLeaders = () => {
 
 const countPendingItems = (parm) => {
   return axios.get(
-    api.countPendingItems + `?leaderId=${parm.leaderId}&officeId=${parm.officeId}&pageStart=${parm.pageStart}&num=4`
+    api.countPendingItems + `?leaderId=${parm.leaderId}&officeId=${parm.officeId}&pageStart=${parm.pageStart}&num=5`
   )
 }
 
-const getAllTasks = () => {
+const getAllTasks = (parm) => {
   return axios.get(
-    api.getAllTasks
+    api.getAllTasks + `?leaderId=${parm.leaderId}&officeId=${parm.officeId}&pageStart=${parm.pageStart}&num=5`
   )
 }
 
