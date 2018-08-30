@@ -65,7 +65,6 @@ export default{
     }
     .itemsBox{
       @include wh(100%,75px);
-      overflow: scroll;
       background: #f9fafd;
       margin-top:22px;
       div{

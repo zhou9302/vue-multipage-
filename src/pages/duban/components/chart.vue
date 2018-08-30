@@ -33,8 +33,19 @@ export default{
       this.option.series[0].data[1].value = this.taskInfo.expiring
       this.option.series[0].data[2].value = this.taskInfo.normal
       this.option.series[0].label.normal.formatter = () => {
-        return this.taskInfo.noTransferred + '\n' + '集团（件）'
+        return `{title|${this.taskInfo.noTransferred}}{s|\n集团(件)}`
       }
+      this.option.series[0].label.normal.rich = {
+        title: {
+          fontSize: 44,
+          color: '#414c65'
+        },
+        s: {
+          fontSize: 17,
+          color: '#414c65'
+        }
+      }
+      console.log(this.option)
       this.myChartLine.setOption(this.option)
     }
   }

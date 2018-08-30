@@ -174,7 +174,11 @@ export default {
         let data = res.data
         console.log(data)
         if (data.status === 10000) {
-          this.enterArr = data.result
+          let arr = data.result
+          arr.forEach(element => {
+            element.ico = window.location.protocol + '//' + window.location.host + element.ico
+          })
+          this.enterArr = arr
         } else {
           alert(data.message)
         }

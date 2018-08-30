@@ -22,10 +22,8 @@ export default function () {
             textStyle: {
               fontSize: '20',
               fontWeight: 'bold'
-
             },
-            position: 'center',
-            formatter: 'aa'
+            position: 'center'
           }
         },
         labelLine: {
