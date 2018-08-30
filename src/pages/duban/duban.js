@@ -5,13 +5,15 @@ import App from './App'
 import router from './router'
 import './mock/index'
 import '../../styles/index.scss'
-import { Pagination } from 'element-ui'
+import { Pagination, Table, TableColumn } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import dayjs from 'dayjs'
 // import '../../styles/iconfont/iconfont.css'
 Vue.config.productionTip = false
 window.dayjs = dayjs
-Vue.component(Pagination.name, Pagination)
+Vue.use(Pagination)
+Vue.use(Table)
+Vue.use(TableColumn)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

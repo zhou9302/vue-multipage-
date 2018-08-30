@@ -40,28 +40,45 @@
           <span><i class="circle red"></i>推进中</span>
           <span><i class="circle purple"></i>已完成</span>
         </div>
-        <table>
-          <thead>
-            <th>序号</th>
-            <th>任务来源</th>
-            <th>ID</th>
-            <th>任务内容</th>
-            <th>分管领导</th>
-            <th>主办处室</th>
-            <th>经办人</th>
-          </thead>
-          <tbody>
-            <tr v-for="(items,index) in taskList" :key="index">
-              <td><i :class="taskStateColor(items.TASK_STATE)"></i>{{index+1}}</td>
-              <td>{{items.ITEM_PARTAPPROACH}}</td>
-              <td>{{items.ID}}</td>
-              <td>{{items.ITEM_TASKSUMMARY}}</td>
-              <td>{{items.ITEM_CANTONALLEADERNAME}}</td>
-              <td>{{items.officeName}}</td>
-              <td>{{items.OPERATOR}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <el-table
+          :data="taskList"
+          align="center"
+          border
+          style="width:100%">
+          <el-table-column
+            label="序号"
+            width="100">
+            <template slot-scope="scope">
+              <i :class="taskStateColor(scope.row.TASK_STATE)"></i>{{scope.row.num+1}}
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="ITEM_PARTAPPROACH"
+            label="任务来源"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="ID"
+            label="ID">
+          </el-table-column>
+          <el-table-column
+            prop="ITEM_TASKSUMMARY"
+            label="任务内容">
+          </el-table-column>
+          <el-table-column
+            prop="ITEM_CANTONALLEADERNAME"
+            label="分管领导"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="officeName"
+            label="主办处室">
+          </el-table-column>
+          <el-table-column
+            prop="OPERATOR"
+            label="经办人" width="200">
+          </el-table-column>
+        </el-table>
         <div class="block">
           <el-pagination
             layout="prev, pager, next"
@@ -188,7 +205,11 @@ export default {
         let data = res.data
         console.log('pendingItems', data)
         if (data.status === 10000) {
-          this.taskList = data.result.taskList
+          let arr = data.result.taskList
+          arr.forEach((element, index) => {
+            element.num = index
+          })
+          this.taskList = arr
           this.taskListTotal = data.result.acount
         } else {
           alert(data.message)
@@ -324,25 +345,24 @@ export default {
         margin-right:40px;
       }
     }
-    table{
-        width:100%;
-        text-align: center;
-        th{
-          height:50px;
-          line-height: 50px;
-          background: #edf1f8;
-          border:1px solid #c0c8db;
-        }
-        td{
-          height:50px;
-          white-space: nowrap;
-          line-height: 50px;
-          border:1px solid #c0c8db;
-        }
-        tr:hover{
-          background: #dae5fb;
-        }
-    }
+    // table{
+    //     width:100%;
+    //     text-align: center;
+    //     th{
+    //       height:50px;
+    //       line-height: 50px;
+    //       border:1px solid #c0c8db;
+    //     }
+    //     td{
+    //       height:50px;
+    //       white-space: nowrap;
+    //       line-height: 50px;
+    //       border:1px solid #c0c8db;
+    //     }
+    //     tr:hover{
+    //       background: #dae5fb;
+    //     }
+    // }
     .block{
       margin-top:40px;
     }

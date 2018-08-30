@@ -1,2 +1,12 @@
 @import './mixin.scss';
 @import './reset.scss';
+.el-table{
+  border:1px solid #c0c8db !important;
+}
+.el-table__header-wrapper .el-table__header th{
+  background:#edf1f8;
+}
+.el-table td, .el-table th.is-leaf{
+  border-bottom:1px solid #c0c8db !important;
+  border-right:1px solid #c0c8db !important;
+}

@@ -2,10 +2,10 @@
   <div>
     <div class="backlogTitle">
       <div>{{label}}<span class="counter" v-if="totalNum">{{totalNum}}</span></div>
-      <div class="more">更多</div>
+      <div class="more" @click="linkMore()">更多</div>
     </div>
     <div class="backlogContent">
-        <div class="item" v-for="items in messageList" :key="items.id" @click="link(items)" v-if="items.formid==='11e8-6eac-3369ebe6-a58e-6933a8e5e211'">
+        <div class="item" v-for="items in messageList" :key="items.id" @click="link(items)">
             <div class="icon">
               <img src="../assets/email.png" alt="" v-if="label=='已办任务'">
               <div v-else>
@@ -33,8 +33,14 @@ export default{
     },
     link (items) {
       console.log(items)
-      window.location.href = `http://172.17.0.179:8080/obpm/portal/dynaform/document/view.action?_formid=${items.formid}&_docid=${items.id}&application=${items.application}&_backURL=/obpm/portal/H5/closeTab.jsp`
-      // window.location.href = `http://172.17.0.179:8080/obpm/portal/dynaform/document/view.action?_formid=11e8-7912-7090cd00-89e4-1578c741478f&_docid=11e8-aacd-64849bfb-a742-c9f683b90aac&application=11e8-6ac3-e24e01d7-a58e-6933a8e5e211&_backURL=/obpm/portal/H5/closeTab.jsp`
+      window.location.href = `/obpm/portal/dynaform/document/view.action?_formid=${items.formid}&_docid=${items.id}&application=${items.application}&_backURL=/obpm/portal/H5/closeTab.jsp`
+    },
+    linkMore () {
+      if (this.label === '待办任务') {
+        window.location.href = '/obpm/portal/H5/pending.jsp'
+      } else {
+        window.location.href = '/obpm/portal/H5/processing.jsp'
+      }
     }
   }
 }

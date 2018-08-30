@@ -6,7 +6,7 @@ let api = {
   inShowPermission: '/api/obpm/runtime/inShowPermission',
   getOfficeAndLeaders: '/api/obpm/getOfficeAndLeaders',
   countPendingItems: '/api/obpm/countPendingItems',
-  getAllTasks: '/zujia/obpm/getAllTasks'
+  getAllTasks: '/api/obpm/getAllTasks'
 }
 
 const getPendingLists = () => {
