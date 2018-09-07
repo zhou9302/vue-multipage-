@@ -7,7 +7,7 @@
     <titleBox :title="'待办已办'" :titleEng="'BACKLOG STATISTICS'"></titleBox>
     <div class="backlogContent">
       <messageBox class="messageBox" :messageList="penddingMessageList" :label="'待办任务'" :totalNum="peddingNum"></messageBox>
-      <messageBox class       ="messageBox" :messageList="processedMessageList" :label="'已办任务'"></messageBox>
+      <messageBox class="messageBox" :messageList="processedMessageList" :label="'已办任务'"></messageBox>
     </div>
     <titleBox :title="'任务信息'" :titleEng="'TASK INFORMATION'" class="infomation"></titleBox>
     <div class="informationBox">
@@ -49,7 +49,7 @@
             label="序号"
             width="100">
             <template slot-scope="scope">
-              <i :class="taskStateColor(scope.row.TASK_STATE)"></i>{{scope.row.num+1}}
+              <i :class="taskStateColor(scope.row.TASK_STATE)"></i>{{scope.row.INDEX}}
             </template>
           </el-table-column>
           <el-table-column
@@ -58,8 +58,8 @@
             width="150">
           </el-table-column>
           <el-table-column
-            prop="ID"
-            label="ID">
+            prop="ITEM_TASKNO"
+            label="ID" width="150">
           </el-table-column>
           <el-table-column
             prop="ITEM_TASKSUMMARY"
@@ -72,11 +72,12 @@
           </el-table-column>
           <el-table-column
             prop="officeName"
-            label="主办处室">
+            label="主办处室"
+            width="250">
           </el-table-column>
           <el-table-column
             prop="OPERATOR"
-            label="经办人" width="200">
+            label="经办人" width="180">
           </el-table-column>
         </el-table>
         <div class="block">
@@ -144,7 +145,7 @@ export default {
     getPendingLists () {
       getPendingLists().then((res) => {
         let data = res.data
-        console.log(res)
+        console.log('getPendingLists', res)
         if (data.code === '0') {
           this.penddingMessageList = data.pendingLists
           this.peddingNum = data.totalNum
@@ -158,7 +159,7 @@ export default {
     getProcessedLists () {
       getProcessedLists().then((res) => {
         let data = res.data
-        console.log(res)
+        console.log('getProcessedLists', res)
         if (data.code === '0') {
           this.processedMessageList = data.pendingLists
         // this.processedNum = data.totalNum
@@ -172,10 +173,11 @@ export default {
     inShowPermission () {
       inShowPermission().then((res) => {
         let data = res.data
-        console.log(data)
+        console.log('inShowPermission', data)
         if (data.status === 10000) {
           let arr = data.result
           arr.forEach(element => {
+            console.log(process)
             element.ico = window.location.protocol + '//' + window.location.host + element.ico
           })
           this.enterArr = arr
@@ -209,11 +211,7 @@ export default {
         let data = res.data
         console.log('pendingItems', data)
         if (data.status === 10000) {
-          let arr = data.result.taskList
-          arr.forEach((element, index) => {
-            element.num = index
-          })
-          this.taskList = arr
+          this.taskList = data.result.taskList
           this.taskListTotal = data.result.acount
         } else {
           alert(data.message)
@@ -250,6 +248,7 @@ export default {
       this.officeId = officeId
       this.isOffice = isOffice
       this.countPendingItems()
+      this.getAllTasks()
     },
     changePage (page) {
       this.currentPage = page
@@ -295,7 +294,7 @@ export default {
   margin-top:15px;
   .messageBox{
     float: left;
-    @include wh(49%,300px);
+    @include wh(49%,260px);
     background: white;
     &:nth-child(2){
       margin-left:2%;

@@ -9,15 +9,6 @@ let api = {
   getAllTasks: '/api/obpm/getAllTasks'
 }
 
-// let api = {
-//   getPendingLists: '/obpm/runtime/getPendingLists?currpage=1&pagelines=4',
-//   getProcessedLists: '/obpm/runtime/getProcessedLists?currpage=1&pagelines=4',
-//   inShowPermission: '/obpm/runtime/inShowPermission',
-//   getOfficeAndLeaders: '/obpm/getOfficeAndLeaders',
-//   countPendingItems: '/obpm/countPendingItems',
-//   getAllTasks: '/obpm/getAllTasks'
-// }
-
 const getPendingLists = () => {
   return axios.get(
     api.getPendingLists

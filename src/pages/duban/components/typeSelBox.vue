@@ -6,9 +6,9 @@
       <div @click="sel('委领导')" :class="{sel:isOffice==false}">委领导</div>
     </div>
     <div class="itemsBox">
-      <div v-if="isOffice==true" v-for="items in typeArr.offices" :key="items.name" @click="selItems(items.id)" :title="items.name"><span :class="{line:items.id==officeId}">{{items.name}}</span></div>
-      <div v-if="isOffice==false" v-for="items in typeArr.leaders" :key="items.item_cantonalleadername" @click="selItems(items.item_cantonalleaderuuid
-)" :title="items.item_cantonalleadername"><span :class="{line:items.item_cantonalleaderuuid==leaderId}">{{items.item_cantonalleadername}}</span></div>
+      <div v-if="isOffice==true" v-for="items in typeArr.offices" :key="items.NAME" @click="selItems(items.ID)" :title="items.NAME"><span :class="{line:items.ID==officeId}">{{items.label?items.label:items.NAME}}</span></div>
+      <div v-if="isOffice==false" v-for="items in typeArr.leaders" :key="items.item_cantonalleadername" @click="selItems(items.ITEM_CANTONALLEADERUUID
+)" :title="items.ITEM_CANTONALLEADERNAME"><span :class="{line:items.ITEM_CANTONALLEADERUUID==leaderId}">{{items.ITEM_CANTONALLEADERNAME}}</span></div>
     </div>
   </div>
 </template>
@@ -35,6 +35,7 @@ export default{
       this.$emit('changeCondition', {leaderId: this.leaderId, officeId: this.officeId, isOffice: this.isOffice})
     },
     selItems (id) {
+      console.log('这里是id', id)
       if (this.isOffice === true) {
         this.leaderId = ''
         this.officeId = id

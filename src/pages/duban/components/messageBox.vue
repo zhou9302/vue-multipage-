@@ -62,8 +62,9 @@ export default{
     }
   }
   .counter{
-    width:16px;
-    height:16px;
+    // width:16px;
+    // height:16px;
+    padding:4px;
     border-radius: 8px;
     background: red;
     color:white;
@@ -82,11 +83,11 @@ export default{
   height:200px;
   padding:0 12px 0 18px;
   .item{
-    @include wh(100%,48px);
+    @include wh(100%,36px);
     display: flex;
     justify-content: flex-start;
     margin-top:10px;
-    line-height: 48px;
+    line-height: 36px;
     &:hover{
       background: #f6f8fa;
       cursor: pointer;
@@ -98,7 +99,7 @@ export default{
          font-size:12px;
          height:24px;
          line-height: 24px;
-         margin-top:12px;
+         margin-top:8px;
       }
       .audit{
         background: #e6effc;
@@ -110,9 +111,9 @@ export default{
       }
     }
     .itemContent{
-      @include wh(80%,48px);
+      @include wh(80%,100%);
       text-align: left;
-      font-size:14px;
+      font-size:16px;
       color:#414c65;
       overflow:hidden;
       text-overflow:ellipsis;
