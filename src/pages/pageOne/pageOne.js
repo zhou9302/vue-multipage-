@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import './mock/index'
 import '../../styles/index.scss'
 import { Pagination, Table, TableColumn } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
